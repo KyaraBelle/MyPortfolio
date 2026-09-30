@@ -2,7 +2,6 @@
   "dependencies": {
     "body-parser": "^2.2.2",
     "compression": "^1.8.1",
-    "concurrently": "^9.2.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "express": "^5.2.1",
@@ -13,10 +12,11 @@
     "@babel/core": "^7.29.0",
     "@babel/preset-env": "^7.29.5",
     "babel-loader": "^10.1.1",
+    "concurrently": "^10.0.5",
     "nodemon": "^3.1.14"
   },
   "scripts": {
-    "dev": "concurrently 'vite' \"nodemon server.js\"",
+    "dev": "concurrently \"npm run dev --prefix client\" \"nodemon server.js\"",
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
