@@ -1,6 +1,15 @@
 //import express from "express";
 //var express = require("express");
 //var app = express();
+import dotenv from "dotenv";
+dotenv.config();
+
+import mongoose from "mongoose";
+mongoose.connect(process.env.MONGO_URI,)
+    .then(() => console.log("MongoDB connected"))
+    .catch((err) => console.log("MongoDB connection error:", err));
+
+    
 import app from "./server/express.js";
 import router from "./server/assets-router.js";
 //const assetsRouter = require("./server/assets-router");
