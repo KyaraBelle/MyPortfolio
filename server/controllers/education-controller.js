@@ -1,4 +1,4 @@
-import EducationModel from "../models/project.js";
+import EducationModel from "../models/education-model.js";
 
 export const getAllEducation = async (req, res) => {
     try {
