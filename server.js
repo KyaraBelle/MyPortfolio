@@ -15,12 +15,18 @@ import app from "./server/express.js";
 
 import router from "./server/assets-router.js";
 import projectRouter from "./server/routes/project-route.js";
+import contactRouter from "./server/routes/contact-route.js";
+import educationRouter from "./server/routes/education-route.js";
+import userRouter from "./server/routes/user-route.js";
 
 //middleware
 app.use("/src", router);
 
 //api routes
 app.use("/api", projectRouter);
+app.use("/api", contactRouter);
+app.use("/api", educationRouter);
+app.use("/api", userRouter);
 
 
 //welcome route (last)
