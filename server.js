@@ -3,6 +3,7 @@
 //var app = express();
 import dotenv from "dotenv";
 dotenv.config();
+import authMiddleware from "./server/middlewares/auth.js";
 
 //MongoDB connection
 import mongoose from "mongoose";
@@ -23,10 +24,11 @@ import userRouter from "./server/routes/user-route.js";
 app.use("/src", router);
 
 //api routes
-app.use("/api", projectRouter);
-app.use("/api", contactRouter);
-app.use("/api", educationRouter);
-app.use("/api", userRouter);
+app.use("/api", userRouter); //no token for signup and login
+app.use("/api", authMiddleware, projectRouter);
+app.use("/api", authMiddleware, contactRouter);
+app.use("/api", authMiddleware, educationRouter);
+
 
 
 //welcome route (last)

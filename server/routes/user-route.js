@@ -4,23 +4,28 @@ import {
     getAllUsers,
     getUserById,
     updateUser,
-    deleteUser
+    deleteUser,
+    loginUser
 } from "../controllers/user-controller.js";
+import authMiddleware from "../middlewares/auth.js";
 
 const router = express.Router();
 
-//Read
-router.get("/users", getAllUsers);
-router.get("/users/:id", getUserById);
+//No token required for signup and login
+//Create 
+router.post("/signup", createUser);
+router.post("/signin", loginUser);
 
-//Create
-router.post("/users", createUser);
+//Token Required for the following routes
+//Read
+router.get("/users", authMiddleware, getAllUsers);
+router.get("/users/:id", authMiddleware, getUserById);
 
 //Update
-router.put("/users/:id", updateUser);
+router.put("/users/:id", authMiddleware, updateUser);
 
 //Delete
-router.delete("/users/:id", deleteUser);
+router.delete("/users/:id", authMiddleware,  deleteUser);
 
 
 export default router;
