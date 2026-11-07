@@ -3,7 +3,7 @@ import generateToken from "../utils/jwt.js";
 
 export const getAllUsers = async (req, res) => {
     try {
-        const users = await UserModel.find();
+        const users = await UserModel.find().select("-password");
         res.status(200).json(users);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -12,7 +12,7 @@ export const getAllUsers = async (req, res) => {
 
 export const getUserById = async (req, res) => {
     try {
-        const user = await UserModel.findById(req.params.id);
+        const user = await UserModel.findById(req.params.id).select("-password");
         res.status(200).json(user);
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -26,7 +26,10 @@ export const createUser = async (req, res) => {
 
         const token = generateToken(savedUser);
 
-        res.status(201).json({ user: savedUser, token });
+        const noPassUser = savedUser.toObject();
+        delete noPassUser.password;
+
+        res.status(201).json({ user: noPassUser, token });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -34,17 +37,24 @@ export const createUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
     try {
-        const updatedUser = await UserModel.findByIdAndUpdate(
-            req.params.id, 
-            req.body,
-            { new: true }
-        );
+        const user = await UserModel.findById(req.params.id);
 
-        if (!updatedUser) {
+        if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
 
-        res.status(200).json(updatedUser);
+        user.name = req.body.name ?? user.name;
+        user.email = req.body.email ?? user.email;
+        if (req.body.password) {
+            user.password = req.body.password;
+        }
+
+        const updatedUser = await user.save();
+
+        const noPassUser = updatedUser.toObject();
+        delete noPassUser.password;
+
+        res.status(200).json(noPassUser);
       } catch (error) {
         res.status(500).json({ message: error.message });
       }
