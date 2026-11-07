@@ -14,7 +14,9 @@ const router = express.Router();
 //No token required for signup and login
 //Create 
 router.post("/signup", createUser);
+    router.post("/users", createUser);
 router.post("/signin", loginUser);
+
 
 //Token Required for the following routes
 //Read
