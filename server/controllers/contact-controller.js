@@ -12,6 +12,10 @@ export const getAllContacts = async (req, res) => {
 export const getContactById = async (req, res) => {
     try {
         const contact = await ContactModel.findById(req.params.id);
+
+        if (!contact) {
+            return res.status(404).json({ message: "Contact not found" });
+        }
         res.status(200).json(contact);
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -24,6 +28,9 @@ export const createContact = async (req, res) => {
         const savedContact = await newContact.save();
         res.status(201).json(savedContact);
     } catch (error) {
+        if (error.name === 'ValidationError') {
+            return res.status(400).json({ message: error.message });
+        }
         res.status(500).json({ message: error.message });
     }
 };
@@ -42,6 +49,9 @@ export const updateContact = async (req, res) => {
 
         res.status(200).json(updatedContact);
       } catch (error) {
+        if (error.name === 'ValidationError') {
+            return res.status(400).json({ message: error.message });
+        }
         res.status(500).json({ message: error.message });
       }
 }
@@ -56,6 +66,9 @@ export const deleteContact = async (req, res) => {
         res.status(200).json({ message: "Contact deleted successfully" });
 
     } catch (error) {
+        if (error.name === 'ValidationError') {
+            return res.status(400).json({ message: error.message });
+        }
         res.status(500).json({ message: error.message });
     }
 };
