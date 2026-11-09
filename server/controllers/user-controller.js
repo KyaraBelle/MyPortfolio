@@ -31,7 +31,7 @@ export const createUser = async (req, res) => {
 
         res.status(201).json({ user: noPassUser, token });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(409).json({ message: "User already exists" });
     }
 };
 
