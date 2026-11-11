@@ -20,13 +20,16 @@ import contactRouter from "./server/routes/contact-route.js";
 import educationRouter from "./server/routes/education-route.js";
 import userRouter from "./server/routes/user-route.js";
 
+//api route not protected by auth middleware
+app.use("/api", contactRouter);
+
 //middleware
 app.use("/src", router);
 
 //api routes
-app.use("/api", userRouter); //no token for signup and login
+app.use("/api", userRouter); //no token for signup and login (POST)
 app.use("/api", authMiddleware, projectRouter);
-app.use("/api", authMiddleware, contactRouter);
+console.log("CONTACT ROUTER IS PUBLIC");
 app.use("/api", authMiddleware, educationRouter);
 
 
