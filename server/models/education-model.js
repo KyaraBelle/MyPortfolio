@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
 
 const educationSchema = new mongoose.Schema({
-    title: { type: String, required: true },
-    completionDate: { type: Date, required: true },
-    description: { type: String, required: true }
+    program: { type: String, required: true },
+    school: { type: String, required: true },
+    years: { type: String, required: true },
+    credential: { type: String, required: true }
 });
 
 export default mongoose.model('Education', educationSchema);
