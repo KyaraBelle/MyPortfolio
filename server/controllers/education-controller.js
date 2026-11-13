@@ -12,9 +12,16 @@ export const getAllEducation = async (req, res) => {
 export const getEducationById = async (req, res) => {
     try {
         const education = await EducationModel.findById(req.params.id);
+        if (!education) {
+            return res.status(404).json({
+                message: "Education not found"
+            });
+        }
         res.status(200).json(education);
     } catch (error) {
-        res.status(404).json({ message: error.message });
+        res.status(400).json({ 
+            message: "Invalid Education ID"
+        });
     }
 };
 
