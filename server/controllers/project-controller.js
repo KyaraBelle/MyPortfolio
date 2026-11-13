@@ -18,7 +18,9 @@ export const getProjectById = async (req, res) => {
         }
         res.status(200).json(project);
     } catch (error) {
-        res.status(404).json({ message: error.message });
+        res.status(400).json({  
+            message: "Invalid Education ID" 
+        });
     }
 };
 
