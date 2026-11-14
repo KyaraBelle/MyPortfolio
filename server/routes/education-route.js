@@ -7,6 +7,9 @@ import {
     deleteEducation
 } from "../controllers/education-controller.js";
 
+import authMiddleware from "../middlewares/auth.js";
+import adminMiddleware from "../middlewares/admin.js";
+
 const router = express.Router();
 
 //Read
@@ -16,15 +19,15 @@ router.get("/education/:id", getEducationById);
     router.get("/qualifications/:id", getEducationById);
 
 //Create
-router.post("/education", createEducation);
-    router.post("/qualifications", createEducation);
+router.post("/education", authMiddleware, adminMiddleware, createEducation);
+    router.post("/qualifications", authMiddleware, adminMiddleware, createEducation);
 
 //Update
-router.put("/education/:id", updateEducation);
-    router.put("/qualifications/:id", updateEducation);
+router.put("/education/:id", authMiddleware, adminMiddleware, updateEducation);
+    router.put("/qualifications/:id", authMiddleware, adminMiddleware, updateEducation);
 
 //Delete
-router.delete("/education/:id", deleteEducation);
-    router.delete("/qualifications/:id", deleteEducation);
+router.delete("/education/:id", authMiddleware, adminMiddleware, deleteEducation);
+    router.delete("/qualifications/:id", authMiddleware, adminMiddleware, deleteEducation);
 
 export default router;

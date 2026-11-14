@@ -7,6 +7,9 @@ import {
     deleteContact
 } from "../controllers/contact-controller.js";
 
+import authMiddleware from "../middlewares/auth.js";
+import adminMiddleware from "../middlewares/admin.js";
+
 const router = express.Router();
 
 //Read
@@ -17,10 +20,10 @@ router.get("/contacts/:id", getContactById);
 router.post("/contacts", createContact);
 
 //Update
-router.put("/contacts/:id", updateContact);
+router.put("/contacts/:id", authMiddleware, adminMiddleware, updateContact);
 
 //Delete
-router.delete("/contacts/:id", deleteContact);
+router.delete("/contacts/:id", authMiddleware, adminMiddleware, deleteContact);
 
 
 export default router;

@@ -29,7 +29,7 @@ app.use("/src", router);
 //api routes
 app.use("/api", userRouter); //no token for signup and login (POST)
 app.use("/api", authMiddleware, projectRouter);
-console.log("CONTACT ROUTER IS PUBLIC");
+
 app.use("/api", authMiddleware, educationRouter);
 
 
